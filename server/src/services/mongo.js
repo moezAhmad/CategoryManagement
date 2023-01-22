@@ -15,7 +15,10 @@ mongoose.connection.on("error", (err) => {
 
 async function mongoConnect() {
   mongoose.set("strictQuery", true);
-  await mongoose.connect(MONGO_URL);
+  await mongoose.connect(MONGO_URL, {
+    dbName: "MerchantManagement",
+    useNewUrlParser: true,
+  });
 }
 
 async function mongoDisconnect() {
