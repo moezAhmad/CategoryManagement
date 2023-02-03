@@ -1,4 +1,17 @@
-const Category = require("../../models/categories.mongo");
+const Category = require("../../models//categories/categories.mongo");
+
+// Get categories count
+async function httpGetCategoriesCount(req, res) {
+  try{
+    const totalCategories = Category.countDocuments();
+    res.json({totalCategories})
+  }catch(err){
+    res.status(500).json({ message: err.message });
+  }
+  
+};
+
+
 // Get all categories
 async function httpGetAllCategories(req, res) {
   try {
@@ -6,9 +19,9 @@ async function httpGetAllCategories(req, res) {
     const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
 
-    const categories = await Category.find().skip(skip).limit(limit);
     const totalCategories = await Category.countDocuments();
-
+    const categories = await Category.find().skip(skip).limit(limit);
+    
     res.json({ categories, totalCategories });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -53,6 +66,7 @@ async function httpDeleteCategory(req, res) {
 }
 
 module.exports = {
+  httpGetCategoriesCount,
   httpGetAllCategories,
   httpPostCategory,
   httpPatchCategory,
