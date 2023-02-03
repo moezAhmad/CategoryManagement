@@ -13,8 +13,9 @@ const productSchema = new mongoose.Schema({
     default: "physical",
     required: true,
   },
-  category: {
-    type: [String],
+  categoryId: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: categoriesMongo,
     required: true,
   },
   price: {
